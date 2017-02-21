@@ -15,6 +15,7 @@
 </form>
 </body>
 <script>
+    debugger;
     document.form.submit();
 </script>
 </html>
