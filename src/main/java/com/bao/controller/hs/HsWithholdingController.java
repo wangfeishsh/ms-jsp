@@ -30,7 +30,10 @@ import java.util.Map;
 @RequestMapping("/hs/withholding")
 public class HsWithholdingController {
     @GetMapping
-    public ModelAndView apply() {
+    public ModelAndView apply(String accountNo,String bankName,
+                              String bankCardNo,String name,
+                              String idNo,String mobile,
+                              String amount,String fee) {
 
         Map formMap = new LinkedHashMap();
         formMap.put("VERSION", "1.1");//接口版本号
@@ -41,19 +44,19 @@ public class HsWithholdingController {
         formMap.put("BANKCODE", "30040000");//银行代码
         formMap.put("COINSTCODE", "000113");//合作单位编号
         formMap.put("COINSTCHANNEL", "000002");//合作单位渠道
-        formMap.put("CARDNBR", "9930040030030000028");//账户
+        formMap.put("CARDNBR", accountNo);//账户
 
-        formMap.put("BANKNAME", "建设银行");//银行名称
-        formMap.put("CARD_BIND", "6217002426843839001");//绑定卡号
-        formMap.put("NAME", "四川女");//姓名
-        formMap.put("IDNO", "517512196707063141");//证件号码
+        formMap.put("BANKNAME", bankName);//银行名称
+        formMap.put("CARD_BIND", bankCardNo);//绑定卡号
+        formMap.put("NAME", name);//姓名
+        formMap.put("IDNO", idNo);//证件号码
         formMap.put("IDTYPE", "01");//证件类型
-        formMap.put("PHONE", "13162219001");//手机号码
-        formMap.put("AMOUNT", "20000.00");//提现金额
-        formMap.put("FEE", "10.00");//手续费
+        formMap.put("PHONE", mobile);//手机号码
+        formMap.put("AMOUNT", amount);//提现金额
+        formMap.put("FEE", fee);//手续费
         formMap.put("FORGERPWD_URL", "http://www.baidu.com");//忘记密码跳转链接
-        formMap.put("BACKGROUND_URL", "http://180.169.28.215:8080/pay-app/callback/hs/withholding");//后台响应链接
-        formMap.put("TRANSACTION_URL", "http://180.169.28.215:8080/pay-app/monitor");//交易页面跳转链接
+        formMap.put("BACKGROUND_URL", "http://180.169.28.214:8080/pay-app/callback/hs/withholdingSign");//后台响应链接
+        formMap.put("TRANSACTION_URL", "http://180.169.28.214:8080/pay-app/monitor");//交易页面跳转链接
         formMap.put("ROUT_FLAG", "N");//是否指定通道
         formMap.put("ROUT_CODE", "");//通道标识
         formMap.put("BANK_CNAPS", "");//开户银行联行号
@@ -88,7 +91,7 @@ public class HsWithholdingController {
 
         formMap.put("SIGN", signData);//签名
 
-        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbsit/app/to/withholdingSign");
+        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbuat/app/to/withholdingSign");
         return new ModelAndView("jump", "model", formMap);
     }
 

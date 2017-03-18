@@ -30,21 +30,22 @@ import java.util.Map;
 public class HsPinSettingController {
 
     @GetMapping
-    public ModelAndView apply() {
+    public ModelAndView apply(String accountNo,String idNo,
+                              String mobile,String name) {
 
         Map formMap = new LinkedHashMap();
         formMap.put("VERSION", "1.1");//接口版本号
         formMap.put("TRXDATE", DateUtil.getCurrentDate());//交易日期
         formMap.put("TRXTIME", DateUtil.getCurrentTime());//交易时间
-        formMap.put("CARDNBR", "9930040030030000077");//账户
-        formMap.put("IDNO", "420984199106018213");//证件号码
+        formMap.put("CARDNBR", accountNo);//账户
+        formMap.put("IDNO", idNo);//证件号码
         formMap.put("IDTYPE", "01");//证件类型
-        formMap.put("PHONE", "17602184437");//手机号码
-        formMap.put("NAME", "陈长");//姓名
+        formMap.put("PHONE", mobile);//手机号码
+        formMap.put("NAME", name);//姓名
         formMap.put("BANKCODE", "30040000");//银行代码
-        formMap.put("RESETPWD_SURL", "http://180.169.28.215:8080/pay-app/monitor");//密码设置成功跳转链接
-        formMap.put("RESETPWD_FURL", "http://180.169.28.215:8080/pay-app/v1/provider/banks?provider=KQ");//密码设置失败跳转链接
-        formMap.put("BACKGROUND_URL", "http://180.169.28.215:8080/pay-app/v1/callback/hs/pinsetting");//后台响应链接
+        formMap.put("RESETPWD_SURL", "http://180.169.28.214:8080/pay-app/monitor");//密码设置成功跳转链接
+        formMap.put("RESETPWD_FURL", "http://180.169.28.214:8080/pay-app/v1/provider/banks?provider=KQ");//密码设置失败跳转链接
+        formMap.put("BACKGROUND_URL", "http://180.169.28.214:8080/pay-app/callback/p2p/pinsettingSign");//后台响应链接
         formMap.put("COINSTCODE", "000113");//合作单位编号
         formMap.put("COINSTCHANNEL", "000002");//合作单位渠道
 
@@ -74,7 +75,7 @@ public class HsPinSettingController {
 
         formMap.put("SIGN", signData);//签名
 
-        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbsit/app/to/pinsettingSign");
+        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbuat/app/to/pinsettingSign");
 
         return new ModelAndView("jump", "model", formMap);
     }

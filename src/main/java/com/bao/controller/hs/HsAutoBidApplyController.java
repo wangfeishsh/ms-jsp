@@ -9,6 +9,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileInputStream;
@@ -30,7 +31,8 @@ import java.util.Map;
 @RequestMapping("/hs/autoBidApply")
 public class HsAutoBidApplyController {
     @GetMapping
-    public ModelAndView apply() {
+    public ModelAndView apply(String accountNo,String amount) {
+        System.out.println(accountNo);
 
         Map formMap = new LinkedHashMap();
         formMap.put("TRXDATE", DateUtil.getCurrentDate());//交易日期
@@ -38,15 +40,15 @@ public class HsAutoBidApplyController {
         formMap.put("BANKCODE", "30040000");//银行代码
         formMap.put("COINSTCODE", "000113");//合作单位编号
         formMap.put("COINSTCHANNEL", "000002");//合作单位渠道
-        formMap.put("CARDNBR", "9930040030030000010");//账户
+        formMap.put("CARDNBR", accountNo);//账户
 
         formMap.put("SERI_NO", IdBuilder.getSeqNo());//签约交易流水号
-        formMap.put("AMOUNT", "100000.00");//签约最高金额
+        formMap.put("AMOUNT", amount);//签约最高金额
         formMap.put("REMARK", "");//备注
         formMap.put("FORGERPWD_URL", "");//忘记密码跳转链接
-        formMap.put("TRANSACTION_URL", "http://180.169.28.215:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
-        formMap.put("REBACK_URL", "http://180.169.28.215:8080/pay-app/v1/callback/hs/autoBidApply");//后台响应链接
-        formMap.put("SUCCESSRESULT_URL", "http://180.169.28.215:8080/pay-app/monitor");//交易成功跳转链接
+        formMap.put("TRANSACTION_URL", "http://180.169.28.214:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
+        formMap.put("REBACK_URL", "http://180.169.28.214:8080/pay-app/callback/p2p/autoBidApplySign");//后台响应链接
+        formMap.put("SUCCESSRESULT_URL", "http://180.169.28.214:8080/pay-app/monitor");//交易成功跳转链接
 
 
         //签名
@@ -74,7 +76,7 @@ public class HsAutoBidApplyController {
 
 
         formMap.put("SIGN", signData);//签名
-        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbsit/app/to/autoBidApplySign");
+        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbuat/app/to/autoBidApplySign");
         return new ModelAndView("jump", "model", formMap);
     }
 }

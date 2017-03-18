@@ -30,7 +30,11 @@ import java.util.Map;
 @RequestMapping("/hs/bidApply")
 public class HsBidApplyController {
     @GetMapping
-    public ModelAndView apply() {
+    public ModelAndView apply(String accountNo,String amount,
+                              String product,String intDate,
+                              String intType,String intPayDay,
+                              String endDate, String yield,
+                              String bosAmtYn ,String bosAmt) {
 
         Map formMap = new LinkedHashMap();
         formMap.put("VERSION", "1.1");//接口版本号
@@ -39,25 +43,25 @@ public class HsBidApplyController {
         formMap.put("BANKCODE", "30040000");//银行代码
         formMap.put("COINSTCODE", "000113");//合作单位编号
         formMap.put("COINSTCHANNEL", "000002");//合作单位渠道
-        formMap.put("CARDNBR", "9930040030030000077");//账户
+        formMap.put("CARDNBR", accountNo);//账户
 
         formMap.put("SERI_NO", IdBuilder.getSeqNo());//申请流水号
-        formMap.put("AMOUNT", "10000.00");//投标金额
+        formMap.put("AMOUNT", amount);//投标金额
         formMap.put("FUISSUER", "A1");//产品发行方
-        formMap.put("PRODUCT", "123451");//标的编号
-        formMap.put("INTDATE", "20170325");//起息日
-        formMap.put("INTTYPE", "1");//付息方式
-        formMap.put("INTPAYDAY", "25");//利息每月支付日
-        formMap.put("ENDDATE", "20170909");//产品到期日
-        formMap.put("YIELD", "8.00000");//预期年化收益率
+        formMap.put("PRODUCT", product);//标的编号
+        formMap.put("INTDATE", intDate);//起息日
+        formMap.put("INTTYPE", intType);//付息方式
+        formMap.put("INTPAYDAY", intPayDay);//利息每月支付日
+        formMap.put("ENDDATE", endDate);//产品到期日
+        formMap.put("YIELD", yield);//预期年化收益率
         formMap.put("FRZFLAG", "1");//是否冻结金额
-        formMap.put("BOSAMT_YN", "1");//是否使用红包
-        formMap.put("BOSAMT", "10.00");//抵扣红包金额
+        formMap.put("BOSAMT_YN", bosAmtYn);//是否使用红包
+        formMap.put("BOSAMT", bosAmt);//抵扣红包金额
         formMap.put("REMARK", "投标");//备注
         formMap.put("TRDRESV", "");//第三方保留域
         formMap.put("FORGERPWD_URL", "");//忘记密码跳转链接
-        formMap.put("TRANSACTION_URL", "http://180.169.28.215:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
-        formMap.put("REBACK_URL", "http://180.169.28.215:8080/pay-app/v1/callback/hs/bidApply");//后台响应链接
+        formMap.put("TRANSACTION_URL", "http://180.169.28.214:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
+        formMap.put("REBACK_URL", "http://180.169.28.214:8080/pay-app/callback/p2p/bidApplySign");//后台响应链接
 
         //签名
         StringBuffer sb = new StringBuffer();
@@ -84,7 +88,7 @@ public class HsBidApplyController {
 
 
         formMap.put("SIGN", signData);//签名
-        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbsit/app/to/bidApplySign");
+        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbuat/app/to/bidApplySign");
         return new ModelAndView("jump", "model", formMap);
     }
 }

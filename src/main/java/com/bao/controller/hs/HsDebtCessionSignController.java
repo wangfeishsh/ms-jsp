@@ -30,7 +30,12 @@ import java.util.Map;
 @RequestMapping("/hs/debtCessionSign")
 public class HsDebtCessionSignController {
     @GetMapping
-    public ModelAndView apply() {
+    public ModelAndView apply(String accountNoI,String accountNoO,
+                              String tBalace,String amount,
+                              String trPrice,String oldSeqNo,
+                              String intDate,
+                              String feeWay,String fee,
+                              String yield) {
 
         Map<String,String> formMap = new LinkedHashMap();
         formMap.put("TRXDATE", DateUtil.getCurrentDate());//交易日期
@@ -39,23 +44,23 @@ public class HsDebtCessionSignController {
         formMap.put("COINSTCODE", "000113");//合作单位编号
         formMap.put("COINSTCHANNEL", "000002");//合作单位渠道
 
-        formMap.put("CARDNBRI", "9930040030030000010");//承接方电子账号
+        formMap.put("CARDNBRI", accountNoI);//承接方电子账号
         formMap.put("SERI_NO", IdBuilder.getSeqNo());//申请流水号
-        formMap.put("OLDSEQNO", "20170218153232653831");//原交易申请流水号
-        formMap.put("CARDNBRO", "9930040030030000077");//转让方电子账号
-        formMap.put("TBALACE", "10000.00");//总共可转让金额
-        formMap.put("AMOUNT", "10000.00");//转让金额
-        formMap.put("TRPRICE", "9000.00");//转让价格
-        formMap.put("INTDATE", "20170129");//起息日
-        formMap.put("YIELD", "8.00000");//转让后预期年化收益率
-        formMap.put("FEEWAY", "0");//手续费扣费方式
-        formMap.put("FEE", "5.00");//转让手续费
+        formMap.put("OLDSEQNO", oldSeqNo);//原交易申请流水号
+        formMap.put("CARDNBRO", accountNoO);//转让方电子账号
+        formMap.put("TBALACE", tBalace);//总共可转让金额
+        formMap.put("AMOUNT", amount);//转让金额
+        formMap.put("TRPRICE", trPrice);//转让价格
+        formMap.put("INTDATE", intDate);//起息日
+        formMap.put("YIELD", yield);//转让后预期年化收益率
+        formMap.put("FEEWAY", feeWay);//手续费扣费方式
+        formMap.put("FEE", fee);//转让手续费
         formMap.put("REMARK", "债转");//备注
         formMap.put("TRDRESV", "");//第三方保留域
         formMap.put("FORGERPWD_URL", "http://www.baidu.com");//忘记密码跳转链接
-        formMap.put("TRANSACTION_URL", "http://180.169.28.215:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
-        formMap.put("REBACK_URL", "http://180.169.28.215:8080/pay-app/v1/callback/hs/debtCessionSign");//后台响应链接
-        formMap.put("SUCCESSRESULT_URL", "http://180.169.28.215:8080/pay-app/monitor");//交易成功跳转链接
+        formMap.put("TRANSACTION_URL", "http://180.169.28.214:8080/pay-app/v1/provider/banks?provider=KQ");//返回交易页面链接
+        formMap.put("REBACK_URL", "http://180.169.28.214:8080/pay-app/callback/p2p/debtCessionSign");//后台响应链接
+        formMap.put("SUCCESSRESULT_URL", "http://180.169.28.214:8080/pay-app/monitor");//交易成功跳转链接
         //签名
         StringBuffer sb = new StringBuffer();
         formMap.forEach((k,v)->{
@@ -81,7 +86,7 @@ public class HsDebtCessionSignController {
 
 
         formMap.put("SIGN", signData);//签名
-        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbsit/app/to/debtCessionSign");
+        formMap.put("payUrl", "https://onlineuat.cupdata.com:50005/dbesbuat/app/to/debtCessionSign");
 
         return new ModelAndView("jump", "model", formMap);
     }
