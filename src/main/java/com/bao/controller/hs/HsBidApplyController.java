@@ -87,7 +87,7 @@ public class HsBidApplyController {
 //        return new ModelAndView("jump", "model", formMap);
         Map requireMap = JSONObject.parseObject(json,Map.class);
 
-        Map resultMap = ClientUtil.post("http://localhost:8080/pay-app/v1/p2p/fund/bid/apply", requireMap);
+        Map resultMap = ClientUtil.post("http://192.168.1.128:8080/pay-app/v1/p2p/fund/bid/apply", requireMap);
 
 //        requireMap.put("SIGN", );//签名
         boolean suc = (boolean) resultMap.get("succeed");
