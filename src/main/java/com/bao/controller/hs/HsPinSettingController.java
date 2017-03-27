@@ -83,7 +83,7 @@ public class HsPinSettingController {
 
         Map requireMap = JSONObject.parseObject(json,Map.class);
 
-        Map resultMap = ClientUtil.post("http://192.168.1.128:8080/pay-app/v1/p2p/acc/pinSetting", requireMap);
+        Map resultMap = ClientUtil.post("http://192.168.1.128:8081/pay-app/v1/p2p/acc/pinSetting", requireMap);
 
 //        requireMap.put("SIGN", );//签名
         boolean suc = (boolean) resultMap.get("succeed");

@@ -96,7 +96,8 @@ public class HsWithholdingController {
 
         Map requireMap = JSONObject.parseObject(json,Map.class);
 
-        Map resultMap = ClientUtil.post("http://192.168.1.128:8080/pay-app/v1/p2p/fin/withdrawAudit", requireMap);
+//        Map resultMap = ClientUtil.post("http://192.168.1.128:8081/pay-app/v1/p2p/acc/withdrawAudit", requireMap);
+        Map resultMap = ClientUtil.post("http://localhost:8081/pay-app/v1/p2p/fin/withdrawAudit", requireMap);
 
 //        requireMap.put("SIGN", );//签名
         boolean suc = (boolean) resultMap.get("succeed");
