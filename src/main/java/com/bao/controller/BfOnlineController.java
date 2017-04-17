@@ -21,7 +21,6 @@ import com.bao.constant.PaymentConstant;
 import com.bao.model.CommonApplyRequest;
 import com.bao.model.PayStrategy;
 import com.bao.model.ResponseResult;
-import com.google.gson.Gson;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -60,10 +59,6 @@ public class BfOnlineController {
         list.add(payStrategy);
         request.setData(list);
 
-        //gson与json转化decimal时候都有精度失真情况
-        Gson gson = new Gson();
-
-		System.out.println("==="+JSON.toJSONString(request));
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
@@ -72,29 +67,10 @@ public class BfOnlineController {
         ResponseResult<Map> responseResult =
                 restTemplate.postForObject("http://localhost:8080/v1/recharge/apply", requestEntity, ResponseResult.class);
 
-//		Client client = ClientBuilder.newClient(new ClientConfig());
-//		Entity<CommonApplyRequest> entity = Entity.entity(request,MediaType.APPLICATION_JSON_TYPE);
-//		ResponseResult responseResult = client.target("http://localhost:8080/")
-//				.path("v1/recharge/apply")
-//				.request(MediaType.APPLICATION_JSON)
-//				.post(entity, ResponseResult.class);
-        Map dataMap = responseResult.getData();
-        System.out.println(dataMap.get("formMap"));
-        Map map =(Map) dataMap.get("formMap");
+        Map map = responseResult.getData();
+        System.out.println(map.get("formMap"));
 
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("<div style=\"text-align:center\">正在提交订单...<form  method=\"post\" action=\"");
-        stringBuffer.append(map.get("payUrl"));
-        stringBuffer.append("\">");
-        map.forEach((key, value) -> {
-            stringBuffer.append("<input type=\"hidden\" name=\""+key+"\" value=\""+value+"\"/>");
-        });
-        stringBuffer.append("<input type=\"submit\" ")
-        .append("name=\"submit\" value='提交到宝付' ")
-        .append("id=\"dh\" style=\"display:none\">");
-        stringBuffer.append("<script>var a=document.getElementById(\"dh\");a.click();</script></form></div>");
-        String html = stringBuffer.toString();
-        return new ModelAndView("kq", "model", html);
+        return new ModelAndView("jump", "model", map.get("formMap"));
     }
 
 }
